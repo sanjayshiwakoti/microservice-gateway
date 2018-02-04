@@ -9,9 +9,11 @@ const baseTransactionUrl = process.env.MSA_TRANSACTION;
  * @param  {Number|String}  payload
  * @return {Promise}
  */
-export function postTransaction(payload) {
-
-    return axios.post(`${baseTransactionUrl}/transactions`, payload)
+export function postTransaction(payload, ) {
+    let config = {
+        headers: {'x-request-id': process.env.MSA_TRANSACTION_KEY}
+    };
+    return axios.post(`${baseTransactionUrl}/transactions`, payload, config)
     .then(function (response) {
             return response;
     })
