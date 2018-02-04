@@ -1,5 +1,5 @@
-import Boom from 'boom';
 import axios from 'axios';
+import {boomError} from '../utils/boomError';
 
 
 const baseTransactionUrl = process.env.MSA_TRANSACTION;
@@ -15,8 +15,8 @@ export function postTransaction(payload) {
     .then(function (response) {
             return response;
     })
-    .catch(function (error) {
-        return new Boom.notFound('Could not post');
+    .catch(function (error) {       
+        boomError(error.response.data.error);
     });
 }
 

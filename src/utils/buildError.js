@@ -7,6 +7,7 @@ import HttpStatus from 'http-status-codes';
  * @return {Object}
  */
 function buildError(err) {
+  
   // Validation errors
   if (err.isJoi) {
     return {
@@ -22,7 +23,6 @@ function buildError(err) {
         })
     };
   }
-
   // HTTP errors
   if (err.isBoom) {
     return {
