@@ -1,18 +1,24 @@
 import Boom from 'boom';
-import User from 'axios';
+import axios from 'axios';
 
+
+const baseTransactionUrl = process.env.MSA_TRANSACTION;
 /**
  * Get a user.
  *
- * @param  {Number|String}  id
+ * @param  {Number|String}  payload
  * @return {Promise}
  */
 export function postTransaction(payload) {
-    return axios.get(process.env.MSA_AUTH + 'users')
+
+    return axios.post(`${baseTransactionUrl}/transactions`, payload)
     .then(function (response) {
-        return response;
+            return response;
     })
     .catch(function (error) {
-        throw new Boom.notFound('Could not post');
+        return new Boom.notFound('Could not post');
     });
 }
+
+
+
