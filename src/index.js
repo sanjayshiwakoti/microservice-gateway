@@ -12,6 +12,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import json from './middlewares/json';
 import * as errorHandler from './middlewares/errorHandler';
+import { authenticate } from './middlewares/authentication';
 
 const app = express();
 
@@ -33,6 +34,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(errorHandler.bodyParser);
 app.use(json);
+
+// Authenticate
+app.use(authenticate);
 
 // Everything in the public folder is served as static content
 app.use(express.static(path.join(__dirname, '/../public')));
