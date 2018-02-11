@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {httpInterceptor} from '../utils/httpInterceptor';
 
 export const get = url => {
   // TODO handle error
@@ -7,5 +8,5 @@ export const get = url => {
 
 export const post = (url, body) => {
   // TODO handle error
-  return axios.post(url, body).then(response => response.data);
+  return axios.post(url, body).then(response => response).catch(error => error);
 };

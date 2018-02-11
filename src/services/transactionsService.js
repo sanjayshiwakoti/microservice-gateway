@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {boomError} from '../utils/boomError';
+import * as httpUtils  from '../utils/httpUtils';
 
 
 const baseTransactionUrl = process.env.MSA_TRANSACTION;
@@ -9,15 +9,14 @@ const baseTransactionUrl = process.env.MSA_TRANSACTION;
  * @param  {Number|String}  payload
  * @return {Promise}
  */
-export function postTransaction(payload, ) {
-    let config = {
-        headers: {'x-request-id': process.env.MSA_TRANSACTION_KEY}
-    };
-    return axios.post(`${baseTransactionUrl}/transactions`, payload, config)
+export function postTransaction(payload) {
+
+    return httpUtils.post(`${baseTransactionUrl}/transactions`, payload)
     .then(function (response) {
             return response;
     })
-    .catch(function (error) {       
+    .catch(function (error) {    
+        console.log(error.response.data.error);   
         boomError(error.response.data.error);
     });
 }
