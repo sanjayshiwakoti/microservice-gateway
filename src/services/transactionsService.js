@@ -16,8 +16,7 @@ export function postTransaction(payload) {
             return response;
     })
     .catch(function (error) {    
-        console.log(error.response.data.error);   
-        boomError(error.response.data.error);
+        boomError(error);
     });
 }
 

@@ -8,5 +8,8 @@ export const get = url => {
 
 export const post = (url, body) => {
   // TODO handle error
-  return axios.post(url, body).then(response => response).catch(error => error);
+  return axios.post(url, body).then(response => response).catch(error => {
+    
+    throw  error.response.data.error;
+  });
 };
