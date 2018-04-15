@@ -1,29 +1,8 @@
 import HttpStatus from 'http-status-codes';
-import * as authService from '../services/authService';
-
-const ROUTES_WITH_NO_AUTHORIZATION_KEY = ['/api/auth/login'];
 
 export const authenticate = (req, res, next) => {
-  if (!isAuthenticationRequired(req.url)) {
-    return next();
-  }
-
-  let accessToken = req.get('Authorization');
-
-  if (accessToken === null) {
-    // TODO handle error
+  if (req.headers && req.headers['x-request-id'] && req.headers['x-request-id'] !== process.env.MSA_COMMON_AUTH_KEY) {
     res.status(HttpStatus.UNAUTHORIZED).json({ error: 'Unauthorized' });
   }
-
-  authService
-    .authenticate(accessToken)
-    .then(() => next())
-    .catch(() => {
-      // TODO handle error
-      res.status(HttpStatus.UNAUTHORIZED).json({ error: 'Unauthorized' });
-    });
-};
-
-const isAuthenticationRequired = url => {
-  return !ROUTES_WITH_NO_AUTHORIZATION_KEY.includes(url);
+  next();
 };
